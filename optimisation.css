@@ -125,7 +125,8 @@
   /* Стили для черного блока */
   .black-box {
     top: 0;
-    color: #12b300;
+    color: #12b300
+    border-radius: 20px 20px 20px 20px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     left: 0;
     width: 80%;
