@@ -1,57 +1,323 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>PredTren</title>
-    <link rel="shortcut icon" href="pt.jpg" type="image/png">
-    <meta charset="utf-8">
-        <link rel="stylesheet" href="style.css" type="text/css">
-        <link rel="stylesheet" href="optimisation.css" type="text/css">
-    <script src="write.js"></script>
-    <script src="fature_click.js"></script>
-    <script src="features_vis.js"></script>
-    <script src="up_menu.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Lotus Family | GTA 5 RP</title>
+    <style>
+        :root {
+            --dark: #0a0a0a;
+            --accent: #c90a0a;
+            --gold: #d4af37;
+            --text: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Навигация */
+        .nav {
+            position: fixed;
+            width: 100%;
+            background: rgba(10,10,10,0.95);
+            padding: 1rem;
+            z-index: 1000;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Основной контент */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+        }
+
+        /* Анимации */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Главная страница */
+        .hero {
+            text-align: center;
+            padding: 12rem 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.9), rgba(0,0,0,0.7)),
+                        url('mafia-bg.jpg') center/cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 60%, rgba(0,0,0,0.9));
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            50% { text-shadow: 0 0 40px rgba(212, 175, 55, 0.5); }
+        }
+
+        /* Дресс-код */
+        .dress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .dress-card {
+            background: rgba(20,20,20,0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .dress-card:hover {
+            transform: scale(1);
+            box-shadow: 0 15px 40px rgba(201, 10, 10, 0.2);
+        }
+
+        .dress-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .card-content {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* Telegram кнопка */
+        .telegram-section {
+            text-align: center;
+            padding: 6rem 0;
+            background: rgba(20,20,20,0.9);
+            margin: 4rem 0;
+            border-radius: 15px;
+        }
+
+        .telegram-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(45deg, #0088cc, #00aced);
+            color: white !important;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,136,204,0.3);
+            transform: translateY(0);
+        }
+
+        .telegram-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,136,204,0.5);
+        }
+
+        .telegram-btn i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        /* Правила */
+        .rules-list {
+            max-width: 800px;
+            margin: 4rem auto;
+        }
+
+        .rule-item {
+            background: rgba(20,20,20,0.9);
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .rule-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--accent);
+            border-radius: 15px 0 0 15px;
+        }
+
+        .rule-item:hover {
+            transform: translateX(10px);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .dress-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <div class="button-container">
-    <div class="button rotated" onclick="toggleTileContainer()">| | |</div>
-</div>
-<div class="tile-container" id="tileContainer">
-    <a href="https://t.me/R0d17N">
-      <div class="tile">Telegram</div>
-    </a>
-  </div>
-  <header class="fade-in" style="display: flex; justify-content: center; align-items: center;">
-    <h1 class = "s" style=" font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
-      <span>P</span>
-      <span>r</span>
-      <span>e</span>
-      <span>d</span>
-      <span>T</span>
-      <span>r</span>
-      <span>e</span>
-      <span>n</span>
-    </h1> 
-    
-    <div class="black-box">
-      ОписаниеxДобро пожаловать в приложение "PredTren" — ваш личный помощник для достижения фитнес-целей!x
+    <nav class="nav">
+        <ul class="nav-links">
+            <li><a href="#home">Главная</a></li>
+            <li><a href="#dress">Дресс-код</a></li>
+            <li><a href="#rules">Правила</a></li>
+            <li><a href="#telegram">Telegram</a></li>
+        </ul>
+    </nav>
 
-      PredTren разработано специально для того, чтобы помочь вам следить за своими тренировками и прогрессировать в упражнениях. Благодаря этому приложению вы сможете увидеть свои результаты на пути к лучшей физической форме.x
+    <!-- Главная страница -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1 class="reveal">Black Lotus Family</h1>
+            <p class="reveal" style="font-size: 1.2rem; letter-spacing: 2px;">Честь · Преданность · Единство</p>
+        </div>
+    </section>
 
-      Скачайте PredTren сейчас и начните тренироваться с уверенностью и целеустремленностью!
-  </div>
-  <ul class="features">
-    <li onclick="displayImage('image1')">Удобное меню</li>
-    <li onclick="displayImage('image2')">Список всех тренировок</li>
-    <li onclick="displayImage('image3')">График успеваемости</li>
-  </ul>
-  </header>
+    <!-- Дресс-код -->
+    <section id="dress" class="container">
+        <h2 class="reveal" style="text-align: center; margin-bottom: 3rem;">Дресс-код</h2>
+        <div class="dress-grid">
+            <div class="dress-card reveal">
+                <img src="correct-dress.jpg" alt="Правильный стиль">
+                <div class="card-content">
+                    <h3>Одобрено</h3>
+                    <p>Классический костюм, темные тона, минимализм</p>
+                </div>
+            </div>
+            <!-- Добавьте больше карточек -->
+        </div>
+    </section>
 
-    <main>
-      <div id="imageOverlay">
-        <span id="closeButton" onclick="closeImageOverlay()">&times;</span>
-        <img id="popupImage" src="" alt="Popup Image">
-      </div>
-    </main>
-    <div id="container"></div>
+    <!-- Правила -->
+    <section id="rules" class="container">
+        <h2 class="reveal" style="text-align: center; margin-bottom: 3rem;">Устав семьи</h2>
+        <div class="rules-list">
+            <div class="rule-item reveal">
+                <h3>Беспрекословное подчинение</h3>
+                <p>Решения руководства семьи окончательны и не подлежат обсуждению</p>
+            </div>
+            <!-- Добавьте больше правил -->
+        </div>
+    </section>
+
+    <!-- Telegram секция -->
+    <section id="telegram" class="container">
+        <div class="telegram-section reveal">
+            <h2 style="margin-bottom: 2rem;">Присоединяйтесь к нашему сообществу</h2>
+            <a href="https://t.me/your_channel" class="telegram-btn" target="_blank">
+                <i class="fab fa-telegram-plane"></i>
+                Наш Telegram
+            </a>
+        </div>
+    </section>
+
+    <script>
+        // Анимация при скролле
+        window.addEventListener('scroll', revealElements);
+
+        function revealElements() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+            
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        // Плавный скролл
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Инициализация
+        revealElements();
+    </script>
 </body>
 </html>
